@@ -16,7 +16,7 @@
                 "--internal-params", "testing/params.yaml",
                 "--include-basedir", "testing/testcases.d",
                 "--static-params", "testing/tf-static-params.json",
-                "--dynamic-params", "testing/tf-dynamic-params.json",
+                "--dynamic-params", "provisioning/tf-dynamic-params.json",
             ],    
             "envFile": ".env",      
             "program": "/home/menus12/dev/venv-pyats-latest/bin/pyats",
