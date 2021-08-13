@@ -1,0 +1,27 @@
+testbed:
+  name: ITNSA Automation Deployment Test Project
+  credentials:
+    default:
+      username: '%ENV{adminuser}'
+      password: '%ENV{password}'
+
+devices:
+  dummy:
+    connections:
+      a:
+        ip: localhost
+  localhost:
+    os: linux
+    type: linux
+    credentials:
+      default:
+        password: '%ENV{LOCAL_PASSWORD}'
+        username: '%ENV{LOCAL_USER}'
+    connections:
+      ssh:
+        protocol: ssh
+        ip: localhost
+        port: 22
+        ssh_options: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+        arguments:
+          connection_timeout: 15

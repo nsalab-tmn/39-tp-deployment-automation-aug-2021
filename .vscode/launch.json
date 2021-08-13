@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",  
+            "args": [
+                "run", "job", "testing/marking_job.py",
+                "--topology-file", "testing/testbed-dummy.yaml",
+                "--marking-file", "testing/marking-auto.yaml",
+                "--unit-test", "testing/ut-auto.py",
+                "--internal-params", "testing/params.yaml",
+                "--include-basedir", "testing/testcases.d",
+                "--static-params", "testing/tf-static-params.json",
+                "--dynamic-params", "testing/tf-dynamic-params.json",
+            ],    
+            "envFile": ".env",      
+            "program": "/home/menus12/dev/venv-pyats-latest/bin/pyats",
+            "console": "integratedTerminal"
+        }
+    ]
+}

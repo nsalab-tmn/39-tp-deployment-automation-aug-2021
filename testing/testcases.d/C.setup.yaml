@@ -1,0 +1,64 @@
+- desc: Login into Cloud53
+  device: dummy
+  action_chain:
+    - action: validate_web_response
+      action_vars:
+        name: '{cloud-53-base-url}/login'
+        headers:
+          - key: Ocp-Apim-Subscription-Key
+            value: '{Ocp-Apim-Subscription-Key}'
+          - key: Content-Type
+            value: application/json
+        method: POST
+        content: 
+          - key: UserName
+            value: '{cloud-53-login}'
+          - key: Password
+            value: '{cloud-53-password}'
+        assert_code: 200
+        set_params: 
+          - AccessToken
+- desc: Get github repository URL
+  device: dummy
+  action_chain:
+    - action: validate_web_response
+      action_vars:
+        name: 'http://localhost:5000/'
+        set_params: 
+          - CloneURL
+- desc: Prepare environment
+  device: localhost
+  action_chain:
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - git clone {CloneURL} repo-{prefix}
+          - cd repo-{prefix}
+          - python3 -m venv venv-{prefix}          
+          - source venv-{prefix}/bin/activate
+          - pip3 install -r requirements.txt
+          - export adminuser={adminuser}
+          - export password={password}
+          - export platform_01_public_ip={platform-01-public-ip}
+          - export platform_02_public_ip={platform-02-public-ip}
+          - export platform_03_public_ip={platform-03-public-ip}          
+    - action: verify_output
+      action_vars:
+        command: echo $VIRTUAL_ENV $
+        tags_are_present: True
+        assert_tags:
+          - "venv"
+    - action: verify_output
+      action_vars:
+        command: pwd
+        tags_are_present: True
+        assert_tags:
+          - "repo"
+- desc: Run deployment
+  device: localhost
+  action_chain:
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - ./run.sh > run.log
+          - cat run.log

@@ -1,0 +1,21 @@
+testcases:
+    Testcase_C0:
+      name: C0 - Testing
+      setup_steps: !include C.setup.yaml
+      tests:
+      cleanup_steps: !include C.cleanup.yaml
+  # Testcase_C1:
+  #   name: C1 - Application availablity
+  #   setup_steps:
+  #   tests:
+  #     Availability_test: !include A4.01.yaml
+  #   cleanup_steps:
+  # Testcase_C2:
+  #   name: C2 - Application fault-tolerance (internetwork)
+  #   setup_steps: 
+  #   tests:
+  #     Respawn_test_01: !include A5.02.yaml
+  #     Respawn_test_02: !include A5.02.yaml
+  #     Respawn_test_03: !include A5.02.yaml
+  #     Reverse_proxy_test: !include A5.02.01.04.yaml
+  #   cleanup_steps: !include A5.02.cleanup.yaml
