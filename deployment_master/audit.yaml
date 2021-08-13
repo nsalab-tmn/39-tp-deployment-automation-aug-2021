@@ -5,7 +5,7 @@
   tasks:
     - name: Render report template
       ansible.builtin.template:
-        src: template.tpl
+        src: template_master.tpl
         dest: "{{inventory_hostname}}.yaml"
     - name: Fetch rendered reports
       ansible.builtin.fetch:
