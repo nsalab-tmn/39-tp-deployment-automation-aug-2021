@@ -31,7 +31,8 @@ resource "azurerm_linux_virtual_machine" "platform-region-01" {
   name                            = "platform-region-01"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = var.location_01
-  size                            = "Standard_B2s"
+  # size                            = "Standard_B2s"
+  size                            = local.instance_sizes[var.instance_size_indexes[0]]
   admin_username                  = var.adminuser
   admin_password                  = random_string.pass.result
   disable_password_authentication = false
@@ -53,8 +54,8 @@ resource "azurerm_linux_virtual_machine" "platform-region-01" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts"
+    offer     = local.offers_skus[var.offers_skus_indexes[0]]["offer"]
+    sku       =  local.offers_skus[var.offers_skus_indexes[0]]["sku"]
     version   = "latest"
   }
   # custom_data = var.deploy_custom_data ? base64encode(templatefile("${path.module}/${var.assets_path}/customdata-platform-region-01.tpl", {
@@ -94,7 +95,7 @@ resource "azurerm_linux_virtual_machine" "platform-region-02" {
   name                            = "platform-region-02"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = var.location_02
-  size                            = "Standard_B1s"
+  size                            = local.instance_sizes[var.instance_size_indexes[1]]
   admin_username                  = var.adminuser
   admin_password                  = random_string.pass.result
   disable_password_authentication = false
@@ -116,8 +117,8 @@ resource "azurerm_linux_virtual_machine" "platform-region-02" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts"
+    offer     = local.offers_skus[var.offers_skus_indexes[1]]["offer"]
+    sku       =  local.offers_skus[var.offers_skus_indexes[1]]["sku"]
     version   = "latest"
   }
   # custom_data = var.deploy_custom_data ? base64encode(templatefile("${path.module}/${var.assets_path}/customdata-platform-region-02.tpl", {
@@ -160,7 +161,7 @@ resource "azurerm_linux_virtual_machine" "platform-region-03" {
   name                            = "platform-region-03"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = var.location_03
-  size                            = "Standard_B1ms"
+  size                            = local.instance_sizes[var.instance_size_indexes[2]]
   admin_username                  = var.adminuser
   admin_password                  = random_string.pass.result
   disable_password_authentication = false
@@ -182,8 +183,8 @@ resource "azurerm_linux_virtual_machine" "platform-region-03" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    offer     = local.offers_skus[var.offers_skus_indexes[2]]["offer"]
+    sku       =  local.offers_skus[var.offers_skus_indexes[2]]["sku"]
     version   = "latest"
   }
   # custom_data = var.deploy_custom_data ? base64encode(templatefile("${path.module}/${var.assets_path}/customdata-platform-region-03.tpl", {

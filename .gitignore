@@ -2,3 +2,4 @@ deployment_master/output/*
 deployment_master/audit_results.yaml
 testing/assessment/__pycache__
 .env
+.terraform*

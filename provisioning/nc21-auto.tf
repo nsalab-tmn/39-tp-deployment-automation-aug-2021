@@ -40,6 +40,27 @@ resource "random_shuffle" "host_octet" {
   seed = random_string.seed[2].result
 }
 
+resource "random_integer" "instance_size_index" {
+  count = 3
+  min = 0
+  max = 2
+  # keepers = {
+  #   # Generate a new integer each time we switch to a new listener ARN
+  #   listener_arn = "${var.listener_arn}"
+  # }
+}
+
+resource "random_integer" "offer_sku_index" {
+  count = 3
+  min = 0
+  max = 1
+  # keepers = {
+  #   # Generate a new integer each time we switch to a new listener ARN
+  #   listener_arn = "${var.listener_arn}"
+  # }
+}
+
+
 module "competion" {
     source = "./terraform"
     count = 1
@@ -53,6 +74,8 @@ module "competion" {
     region_octets = random_shuffle.region_octet.result
     subnet_octets = random_shuffle.subnet_octet.result
     host_octets = random_shuffle.host_octet.result
+    instance_size_indexes = random_integer.instance_size_index.*.result
+    offers_skus_indexes = random_integer.offer_sku_index.*.result
 }
 
 output "seeds" {
