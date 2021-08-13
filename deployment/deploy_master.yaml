@@ -1,0 +1,15 @@
+---
+- name: Execute kickstart script
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Render kickstart template
+      template:
+        src: infra.tpl
+        dest: kickstart.sh
+    - name: Fix script permissions
+      ansible.builtin.file:
+        path: kickstart.sh
+        mode: u=rwx,g=r,o=r
+    - name: Run script
+      ansible.builtin.shell: sudo /home/azadmin/kickstart.sh

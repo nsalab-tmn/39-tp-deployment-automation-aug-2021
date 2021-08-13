@@ -1,0 +1,14 @@
+---
+- name: Get audit information
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Render report template
+      ansible.builtin.template:
+        src: template.tpl
+        dest: "{{inventory_hostname}}.yaml"
+    - name: Fetch rendered reports
+      ansible.builtin.fetch:
+        src: "{{inventory_hostname}}.yaml"
+        dest: "./output/"
+        flat: yes

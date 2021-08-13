@@ -1,0 +1,16 @@
+---
+# If you don't know the Kung Fu, you can simply transfer kickstart bash script and run it
+# Notice that it doesn't garantee you a idempotent behaviour after repetitive execution
+- name: Execute kickstart script
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Copy script
+      ansible.builtin.copy:
+        src: ./kickstart.sh
+        dest: /home/azadmin/kickstart.sh
+        mode: u=rwx,g=r,o=r
+    - name: Run script
+      ansible.builtin.shell: /home/azadmin/kickstart.sh
+
+
