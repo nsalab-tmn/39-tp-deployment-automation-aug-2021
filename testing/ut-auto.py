@@ -47,7 +47,7 @@ def process_steps(test_steps, testbed, steps, params):
 
 
 #testcase classes which will take data from datafile
-class Testcase_C0(aetest.Testcase):
+class Testcase_C1(aetest.Testcase):
     
     @aetest.setup
     def setup(self, testbed, steps, params):
@@ -57,8 +57,6 @@ class Testcase_C0(aetest.Testcase):
             aetest.loop.mark(self.test, uids=list(self.tests))
         else:
             aetest.skip('No tests specified')
-        
-            
 
     @aetest.test
     def test(self, testbed, steps, section, params):
@@ -67,17 +65,22 @@ class Testcase_C0(aetest.Testcase):
         else:
             aetest.skip('No tests specified')
 
-        
-
-        
     @aetest.cleanup
     def cleanup(self, testbed, steps, params):
         if self.cleanup_steps is not None:
             process_steps(test_steps = self.cleanup_steps, testbed = testbed, steps=steps, params=params)
             
-# class Testcase_C2(Testcase_C1):
-#     pass
+class Testcase_C2(Testcase_C1):
+    pass
 
+class Testcase_C3(Testcase_C1):
+    pass
+
+class Testcase_C4(Testcase_C1):
+    pass
+
+class Testcase_C5(Testcase_C1):
+    pass
 
 # main()
 if __name__ == '__main__':

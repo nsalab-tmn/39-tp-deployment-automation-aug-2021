@@ -25,3 +25,30 @@ devices:
         ssh_options: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
         arguments:
           connection_timeout: 15
+  platform-region-01:
+    os: linux
+    type: linux
+    connections:
+      ssh:
+        protocol: ssh
+        ip: '%ENV{platform_01_public_ip}'
+        arguments:
+          connection_timeout: 15
+  platform-region-02:
+    os: linux
+    type: linux
+    connections:
+      ssh:
+        protocol: ssh
+        ip: '%ENV{platform_02_public_ip}'
+        arguments:
+          connection_timeout: 15
+  platform-region-03:
+    os: linux
+    type: linux
+    connections:
+      ssh:
+        protocol: ssh
+        ip: '%ENV{platform_03_public_ip}'
+        arguments:
+          connection_timeout: 15

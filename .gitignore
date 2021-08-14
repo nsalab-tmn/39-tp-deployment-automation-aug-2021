@@ -5,3 +5,4 @@ testing/assessment/__pycache__
 .terraform*
 provisioning/terraform.*
 provisioning/tf-dynamic-params.json
+testing/__pycache__/*

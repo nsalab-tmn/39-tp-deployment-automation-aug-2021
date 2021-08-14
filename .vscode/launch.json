@@ -10,7 +10,7 @@
             "request": "launch",  
             "args": [
                 "run", "job", "testing/marking_job.py",
-                "--topology-file", "testing/testbed-dummy.yaml",
+                "--topology-file", "testing/testbed-auto.yaml",
                 "--marking-file", "testing/marking-auto.yaml",
                 "--unit-test", "testing/ut-auto.py",
                 "--internal-params", "testing/params.yaml",

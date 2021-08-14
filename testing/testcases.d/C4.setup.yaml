@@ -1,0 +1,37 @@
+- desc: Run master audit
+  device: platform-region-02
+  action_chain:
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{distribution-parser}'      
+        set_param: distribution_master
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{kernel-parser}'      
+        set_param: kernel_master
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{vcpu-count-parser}'      
+        set_param: vcpu_master
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{ram-mb-parser}'      
+        set_param: ram_master
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{boot-img-parser}'      
+        set_param: boot_master
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - '{python-ver-parser}'      
+        set_param: python_master
+    - action: set_params
+      action_vars:
+        - key: platform-number
+          value: 02

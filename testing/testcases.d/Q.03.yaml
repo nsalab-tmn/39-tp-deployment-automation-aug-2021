@@ -1,0 +1,9 @@
+- desc: vCPU count
+  device: localhost
+  action_chain:
+    - action: verify_output
+      action_vars:
+        command: cat output/*{platform-number}* | yq .vCPUs
+        tags_are_present: True
+        assert_tags:
+          - '{vcpu_master}'

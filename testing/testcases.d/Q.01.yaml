@@ -1,0 +1,9 @@
+- desc: Distribution
+  device: localhost
+  action_chain:
+    - action: verify_output
+      action_vars:
+        command: cat output/*{platform-number}* | yq .Distribution
+        tags_are_present: True
+        assert_tags:
+          - '{distribution_master}'

@@ -1,3 +1,10 @@
+- desc: Cloud53 warm-up
+  device: localhost
+  action_chain:
+    - action: run_shell_commands
+      action_vars:
+        commands: 
+          - curl {cloud-53-base-url}/login
 - desc: Login into Cloud53
   device: dummy
   action_chain:
@@ -37,23 +44,13 @@
           - python3 -m venv venv-{prefix}          
           - source venv-{prefix}/bin/activate
           - pip3 install -r requirements.txt
+          - pip3 install yq
+          - rm -rf output
           - export adminuser={adminuser}
           - export password={password}
           - export platform_01_public_ip={platform-01-public-ip}
           - export platform_02_public_ip={platform-02-public-ip}
           - export platform_03_public_ip={platform-03-public-ip}          
-    - action: verify_output
-      action_vars:
-        command: echo $VIRTUAL_ENV $
-        tags_are_present: True
-        assert_tags:
-          - "venv"
-    - action: verify_output
-      action_vars:
-        command: pwd
-        tags_are_present: True
-        assert_tags:
-          - "repo"
 - desc: Run deployment
   device: localhost
   action_chain:

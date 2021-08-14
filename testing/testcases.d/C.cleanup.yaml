@@ -4,6 +4,6 @@
     - action: run_shell_commands
       action_vars:
         commands: 
-          - deactivate
-          - cd ..
+          - "deactivate"
+          - "cd .."
           - "rm -rf repo-{prefix}"

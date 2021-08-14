@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 import sys
 import traceback
 from nested_lookup import nested_lookup
+import json
 
 def validate_web_response(testbed, device, action_vars, params): 
     try:
@@ -25,7 +26,8 @@ def validate_web_response(testbed, device, action_vars, params):
             method = action_vars['method']
         if 'content' in action_vars.keys():
             c = kv_to_dict(action_vars['content'], params)
-            content = str(c).replace('\'','"')
+            content = json.dumps(c)
+            #content = str(c).replace('\'','"')
             #content = action_vars['content'].format_map(params)
         
         request = httpx.Request(method = method,
@@ -90,7 +92,7 @@ def get_trace(exc_info, vars):
     _, _, tb = exc_info
     tb_info = traceback.extract_tb(tb)
     filename, line, func, text = tb_info[-1]
-    logger.info('Assertion failed on line {} in statement {}'.format(line, text))
+    logger.info('Assertion failed in {} on line {} in function {} in statement {}'.format(filename, line, func, text))
     logger.info('Expected: ' + str(vars))
 
 def update_dict(d, u):
@@ -124,7 +126,12 @@ def go_sleep(testbed, device, action_vars, params):
 def kv_to_dict(kvdict, params): 
     d = {}
     for seq in kvdict: 
-        d[str(seq['key']).format_map(params)] = str(seq['value']).format_map(params) 
+        if type(seq['key']) == str: k = seq['key'].format_map(params) 
+        else: k = seq['key'] 
+        if type(seq['value']) == str: v = seq['value'].format_map(params) 
+        else: v = seq['value'] 
+        d[k] = v 
+        # d[str(seq['key']).format_map(params)] = str(seq['value']).format_map(params) 
         #append({str(kvdict[seq]['key']).format_map(params): str(kvdict[seq]['value']).format_map(params)}) 
     return d 
 
@@ -148,9 +155,12 @@ def validate_dns_record(testbed, device, action_vars, params):
         assert len(answer.response.answer[0]) >= action_vars['min_records']
         for seq in range(action_vars['min_records']):
             assert ipaddress.ip_address(str(answer.rrset[seq])).is_private == action_vars['is_private']
+    except AssertionError:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed('Response: ' + str(answer))
     except Exception as e:
-        logger.info("Exception occured:" + str(e))
-        aetest.steps.Step.failed('Validation failed. Expected: ' + str(action_vars))
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
 def nslookup(domain):
     result = []
@@ -175,37 +185,59 @@ def ntoa(names):
         return addr
 
 def set_params(testbed, device, action_vars, params): 
-    for var in action_vars:
-        params[var['key']] = var['value']
-    return params
+    try:
+        for var in action_vars:
+            params[var['key']] = var['value']
+        return params
+    except Exception as e:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
 def find_interface(testbed, device, action_vars, params): 
-    command = "show ip route " + action_vars['network'].format_map(params) + " | include \*"
-    result = testbed.devices[device].execute(command)
-    if result is not None:        
-        params[action_vars['param']] = result.split(' via ').pop()
-    return params
+    try:
+        command = "show ip route " + action_vars['network'].format_map(params) + " | include \*"
+        result = testbed.devices[device].execute(command)
+        if result is not None:        
+            params[action_vars['param']] = result.split(' via ').pop()
+        return params
+    except Exception as e:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
-def verify_output(testbed, device, action_vars, params):    
-    result = testbed.devices[device].execute(action_vars['command'].format_map(params))
-    assert_tags(action_vars['assert_tags'], result, action_vars['tags_are_present'])
+def verify_output(testbed, device, action_vars, params):
+    try:    
+        result = testbed.devices[device].execute(action_vars['command'].format_map(params))
+        assert_tags(action_vars['assert_tags'], result, action_vars['tags_are_present'], params)
+    except Exception as e:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
 def run_shell_commands(testbed, device, action_vars, params):
-    results = []
-    for seq in range(len(action_vars['commands'])):
-        results.append(testbed.devices[device].execute(action_vars['commands'][seq].format_map(params), timeout=300))
-    return results
+    try:
+        results = ''
+        for seq in range(len(action_vars['commands'])):
+            results = results + testbed.devices[device].execute(action_vars['commands'][seq].format_map(params), timeout=300)
+        if 'set_param' in action_vars.keys() and action_vars['set_param'] is not None:
+            params[action_vars['set_param']] = results
+        return results
+    except Exception as e:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
 def config(testbed, device, action_vars, params):
-    for seq in range(len(action_vars['commands'])): 
-	    action_vars['commands'][seq] = action_vars['commands'][seq].format_map(params) 
-    result = testbed.devices[device].configure(action_vars['commands'])
-    return result
+    try:
+        for seq in range(len(action_vars['commands'])): 
+            action_vars['commands'][seq] = action_vars['commands'][seq].format_map(params) 
+        result = testbed.devices[device].configure(action_vars['commands'])
+        return result
+    except Exception as e:
+        get_trace(sys.exc_info(), action_vars)
+        aetest.steps.Step.failed("Exception occured:" + str(e))
 
-def assert_tags(reference_tags, output, present):
+def assert_tags(reference_tags, output, present, params):
     if present:
         for tag in reference_tags:
-            assert tag in output
+            assert tag.format_map(params) in output
     else:
         for tag in reference_tags:
             assert tag not in output

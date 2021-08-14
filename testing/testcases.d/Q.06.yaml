@@ -1,0 +1,9 @@
+- desc: Python version
+  device: localhost
+  action_chain:
+    - action: verify_output
+      action_vars:
+        command: cat output/*{platform-number}* | yq .Python
+        tags_are_present: True
+        assert_tags:
+          - '{python_master}'  

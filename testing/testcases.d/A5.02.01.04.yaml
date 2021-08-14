@@ -3,7 +3,7 @@
   action_chain:
     - action: validate_web_response
       action_vars:
-        name: 'https://{gw-01-public-ip}/health'
+        name: 'https://{platform-01-public-ip}/health'
         headers:
           - key: Authorization
             value: Bearer {web-53-auth}
@@ -24,7 +24,7 @@
         seconds: '{default-sleep-timer}'
     - action: validate_web_response
       action_vars:
-        name: 'https://{gw-02-public-ip}/health'
+        name: 'https://{platform-02-public-ip}/health'
         headers:
           - key: Authorization
             value: Bearer {web-53-auth}
@@ -45,7 +45,7 @@
         seconds: '{default-sleep-timer}'
     - action: validate_web_response
       action_vars:
-        name: 'https://{gw-03-public-ip}/health'
+        name: 'https://{platform-03-public-ip}/health'
         headers:
           - key: Authorization
             value: Bearer {web-53-auth}
@@ -55,7 +55,7 @@
             value: app.{dns-zone}
         content: 
           - key: Health
-            value: False
+            value: false
         method: POST
         assert_code: 202
         assert_json:

@@ -31,7 +31,7 @@ resource "random_shuffle" "subnet_octet" {
 }
 
 resource "random_shuffle" "host_octet" {
-  input        = range(1, 254)
+  input        = range(10, 254)
   keepers = {
     # Generate a new id each time we switch to a new network seedid
     seed_id = random_string.seed[2].id
@@ -63,7 +63,7 @@ resource "random_integer" "offer_sku_index" {
 
 module "competion" {
     source = "./terraform"
-    count = 1
+    count = 2
     prefix = format("comp-%02d", count.index+1)
     deploy_routes = true
     deploy_dns_a_records = true
