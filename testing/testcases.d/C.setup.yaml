@@ -44,13 +44,13 @@
           - python3 -m venv venv-{prefix}          
           - source venv-{prefix}/bin/activate
           - pip3 install -r requirements.txt
-          - pip3 install yq
           - rm -rf output
           - export adminuser={adminuser}
           - export password={password}
           - export platform_01_public_ip={platform-01-public-ip}
           - export platform_02_public_ip={platform-02-public-ip}
           - export platform_03_public_ip={platform-03-public-ip}          
+          - export prefix={prefix}  
 - desc: Run deployment
   device: localhost
   action_chain:

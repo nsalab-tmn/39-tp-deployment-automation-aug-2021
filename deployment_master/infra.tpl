@@ -3,7 +3,17 @@ while ! ping -c 1 -W 1 1.1.1.1; do
     echo "Waiting for 1.1.1.1 - network interface might be down..."
     sleep 5
 done
-set -xe
+
+sudo docker stop web-53
+sudo docker stop traefik
+sudo docker stop redis-53
+
+sudo docker rm web-53
+sudo docker rm traefik
+sudo docker rm redis-53
+
+rm -rf ~/src
+
 sudo apt install -y snapd
 snap install docker --classic
 mkdir ~/src

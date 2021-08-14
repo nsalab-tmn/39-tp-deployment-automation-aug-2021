@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export adminuser=azadmin
-export password=w%cJ55TbGHxAkYL5
-export platform_01_public_ip=20.98.200.22
-export platform_02_public_ip=13.77.220.37
-export platform_03_public_ip=20.97.71.191
+export password=i1-xT00jkNwAAo97
+export platform_01_public_ip=52.151.59.206
+export platform_02_public_ip=52.161.89.214
+export platform_03_public_ip=23.102.191.18
 export prefix=gfd-39-comp-01

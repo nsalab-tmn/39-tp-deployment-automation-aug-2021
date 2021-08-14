@@ -200,6 +200,9 @@ resource "null_resource" "params" {
   depends_on = [    
     azurerm_linux_virtual_machine.platform-region-01,
     azurerm_linux_virtual_machine.platform-region-02,
-    azurerm_linux_virtual_machine.platform-region-03
+    azurerm_linux_virtual_machine.platform-region-03,
+    azurerm_bastion_host.region-01,
+    azurerm_bastion_host.region-02,
+    azurerm_bastion_host.region-03
   ]
 }

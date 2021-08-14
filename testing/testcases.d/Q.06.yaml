@@ -3,7 +3,7 @@
   action_chain:
     - action: verify_output
       action_vars:
-        command: cat output/*{platform-number}* | yq .Python
+        command: cat output/*{platform-number}* | yq .Python3
         tags_are_present: True
         assert_tags:
           - '{python_master}'  

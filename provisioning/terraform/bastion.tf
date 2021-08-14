@@ -1,7 +1,7 @@
 ##region-01============
 resource "azurerm_public_ip" "bastion-region-01" {
   name                = "${var.prefix}-vnet-region-01-ip"
-  location            = azurerm_resource_group.main.location
+  location            = var.location_01
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
   sku                 = "Standard"
@@ -9,7 +9,7 @@ resource "azurerm_public_ip" "bastion-region-01" {
 
 resource "azurerm_bastion_host" "region-01" {
   name                = "${var.prefix}-bastion-region-01"
-  location            = azurerm_resource_group.main.location
+  location            = azurerm_public_ip.bastion-region-01.location
   resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
@@ -21,7 +21,7 @@ resource "azurerm_bastion_host" "region-01" {
 ##region-02============
 resource "azurerm_public_ip" "bastion-region-02" {
   name                = "${var.prefix}-vnet-region-02-ip"
-  location            = "westcentralus"
+  location            = var.location_02
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
   sku                 = "Standard"
@@ -42,7 +42,7 @@ resource "azurerm_bastion_host" "region-02" {
 ##region-03============
 resource "azurerm_public_ip" "bastion-region-03" {
   name                = "${var.prefix}-vnet-region-03-ip"
-  location            = "southcentralus"
+  location            = var.location_03
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
   sku                 = "Standard"
