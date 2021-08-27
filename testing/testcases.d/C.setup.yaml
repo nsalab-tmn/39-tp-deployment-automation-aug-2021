@@ -30,7 +30,12 @@
   action_chain:
     - action: validate_web_response
       action_vars:
-        name: 'http://localhost:5000/'
+        name: '{cloud-53-base-url}/adm/competitions/{competition-id}/user-data?username={prefix}'
+        headers:
+          - key: Authorization
+            value: Bearer {AccessToken}
+          - key: Ocp-Apim-Subscription-Key
+            value: '{Ocp-Apim-Subscription-Key}'
         set_params: 
           - CloneURL
 - desc: Prepare environment

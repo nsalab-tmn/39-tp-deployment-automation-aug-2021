@@ -4,10 +4,10 @@ cloud-53-login: admin
 cloud-53-password: pass01
 cloud-53-base-url: 'https://cloud53-dev-apim.azure-api.net/cloud53-dev'
 default-ping-count: 5
-default-sleep-timer: 3
+default-sleep-timer: 10
 external-host-ip: 1.1.1.1
 exec-timeout: 300
-web-53-auth: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Mjg5Njg1NjcsIm5iZiI6MTYyODkzMjU2Nywic3ViIjoiYWRtaW4ifQ.jOMrxeIQ2doLn5CQvSZOWKCpiMLU5aokpY-wMVKRRTc'
+web-53-auth: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzAxMjUzNTUsIm5iZiI6MTYzMDA4OTM1NSwic3ViIjoiYWRtaW4ifQ.iQEwrlw2MM4p7UeEqv_yj9hFXeyx2b_Oy663MB5ubv8'
 
 linux-ping-parser: 2>&1 | awk -F'/' 'END{ print (/^rtt/? "OK "$5" ms":"FAIL") }'
 distribution-parser: echo $(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//') $(awk '/DISTRIB_RELEASE=/' /etc/*-release | sed 's/DISTRIB_RELEASE=//')

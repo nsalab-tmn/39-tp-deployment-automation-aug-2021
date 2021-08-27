@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Deployment-auto",
             "type": "python",
             "request": "launch",  
             "args": [
@@ -19,7 +19,7 @@
                 "--dynamic-params", "provisioning/tf-dynamic-params.json",
             ],    
             "envFile": ".env",      
-            "program": "/home/menus12/dev/venv-pyats-latest/bin/pyats",
+            "program": "/home/superadmin/venv-pyats/bin/pyats",
             "console": "integratedTerminal"
         }
     ]
