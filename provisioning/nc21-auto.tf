@@ -63,7 +63,7 @@ resource "random_integer" "offer_sku_index" {
 
 module "competion" {
     source = "./terraform"
-    count = 13
+    count = 15
     prefix = format("comp-%02d", count.index+1)
     deploy_routes = true
     deploy_dns_a_records = true

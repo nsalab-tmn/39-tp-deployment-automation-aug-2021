@@ -11,7 +11,7 @@ testcases:
       Availability_test: !include A4.01.yaml
     cleanup_steps: 
   Testcase_C2:
-    name: C2 - Application fault-tolerance (internetwork)
+    name: C2 - Application fault-tolerance (Application)
     setup_steps: 
     tests:
       Respawn_test_01: !include A5.02.yaml

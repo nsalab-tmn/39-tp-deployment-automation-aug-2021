@@ -2,6 +2,7 @@ import yaml
 import json
 import io
 import pprint
+import os
 
 from pyats.easypy import run
 from pyats.easypy import Task
